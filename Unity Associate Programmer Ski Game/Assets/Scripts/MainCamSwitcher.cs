@@ -6,7 +6,7 @@ using Cinemachine;
 
 public static class MainCamSwitcher
 {
-    static List<CinemachineVirtualCamera> cameras = new List<CinemachineVirtualCamera>();
+    static List<CinemachineVirtualCamera> _cameras = new List<CinemachineVirtualCamera>();
     public static CinemachineVirtualCamera ActiveCamera = null;
 
     public static bool IsActiveCamera(CinemachineVirtualCamera camera)
@@ -18,26 +18,26 @@ public static class MainCamSwitcher
     {
         camera.Priority = 10;
         ActiveCamera = camera;
-        foreach (CinemachineVirtualCamera c in cameras)
+        foreach (CinemachineVirtualCamera c in _cameras)
         {
             if (c != camera)
             {
                 c.Priority = 0;
             }
         }
-        Debug.Log(ActiveCamera + " isActive");
+        //Debug.Log(ActiveCamera + " isActive");
 
     }
     public static void Register(CinemachineVirtualCamera camera)
     {
-        cameras.Add(camera);
-        Debug.Log(camera + "Registered");
+        _cameras.Add(camera);
+        //Debug.Log(camera + "Registered");
     }
 
     public static void UnRegister(CinemachineVirtualCamera camera)
     {
-        cameras.Remove(camera);
-        Debug.Log(camera + "UnRegistered");
+        _cameras.Remove(camera);
+        //Debug.Log(camera + "UnRegistered");
     }
 
 }
