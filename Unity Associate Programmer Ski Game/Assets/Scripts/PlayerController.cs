@@ -8,6 +8,11 @@ using System.Collections.Generic;
 
  public class PlayerController : MonoBehaviour
 {
+    public struct Stats
+    {
+        
+    }
+
     private Rigidbody rb;
     public float speedIncrease = 0;
     public float speed = 9.81f;
@@ -21,6 +26,7 @@ using System.Collections.Generic;
     public Animator anim;
     private bool isGrounded = true;
     public Transform groundCheck;
+    public LayerMask groundLayer;
 
     private Vector2 direction;
 
@@ -35,13 +41,59 @@ using System.Collections.Generic;
     // Update is called once per frame
     void Update()
     {
-        MoveForward();
-        RotatePlayer();
+
         GroundCheck();
+
+        {
+            if (isGrounded)
+            {
+                // MoveForward();
+
+                if (Input.GetKey(KeyCode.A))
+                {
+                    LeftTurn();
+                    Debug.Log("A pressed");
+                }
+
+                if (Input.GetKey(KeyCode.D))
+                {
+                    RightTurn();
+                    Debug.Log("D pressed");
+                }
+
+            }
+        }
         // Debug.Log(downWardSpeed);
 
     }
 
+    private void RightTurn()
+    {
+        Debug.Log(transform.eulerAngles.y);
+
+        if (transform.eulerAngles.y > 91)
+        {
+            transform.Rotate(new Vector3(0, -rotationSpeed, 0) * Time.deltaTime, Space.Self);
+        }
+    }
+
+
+    private void LeftTurn()
+    {
+        Debug.Log(transform.eulerAngles.y);
+        // rotates the player, limiting them after reaching a certain angle
+        if (transform.eulerAngles.y < 269)
+        {
+            transform.Rotate(new Vector3(0, rotationSpeed, 0) * Time.deltaTime, Space.Self);
+        }
+
+    }
+
+    void FixedUpdate()
+    {
+
+        RotatePlayer();
+    }
     private void RotatePlayer()
     {
         /*
@@ -67,17 +119,7 @@ using System.Collections.Generic;
 
 
          */
-        if(isGrounded)
-        {
-            if (Input.GetKey(KeyCode.A))
-            {
-                transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime);
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
-            }
-        }
+
 
 
 
@@ -86,7 +128,11 @@ using System.Collections.Generic;
 
     public void GroundCheck()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, .5f);
+        //isGrounded = Physics.Raycast(transform.position, Vector3.down, .5f);
+        // couls also use a line cast to achieve ^ 
+
+        isGrounded = Physics.Linecast(transform.position, groundCheck.position, groundLayer);
+        Debug.Log(isGrounded);
         anim.SetBool("grounded", isGrounded);
 
 
@@ -100,15 +146,12 @@ using System.Collections.Generic;
         // use Time.deltaTime
         // float move_z = Input.GetAxis("Vertical");
         downWardSpeed += Time.deltaTime;
-        if (isGrounded)
-        {
-            anim.SetFloat("playerSpeed", downWardSpeed);
+        anim.SetFloat("playerSpeed", downWardSpeed);
             downWardSpeed = Mathf.Clamp(downWardSpeed, minSpeed, maxSpeed);
 
             Vector3 Up = new Vector3(0f, rb.velocity.y, 0f);
 
             rb.velocity = (transform.forward).normalized * downWardSpeed + Up;
-        }
-        //Debug.Log("Velocity altered");
+            //Debug.Log("Velocity altered");
     }
 }
