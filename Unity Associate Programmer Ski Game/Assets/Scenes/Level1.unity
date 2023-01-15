@@ -1524,7 +1524,7 @@ PrefabInstance:
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
@@ -1544,22 +1544,22 @@ PrefabInstance:
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9999939
       objectReference: {fileID: 0}
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.003490679
       objectReference: {fileID: 0}
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
@@ -1569,7 +1569,7 @@ PrefabInstance:
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4335157639803988949, guid: 079d8e1325f92924690275cc28f21b1b,
         type: 3}
@@ -14456,6 +14456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e0ed761cfb2ec4a895aaa9c4419c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisCam: {fileID: 1772787058}
 --- !u!65 &555973847
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15028,7 +15029,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584372638}
-  m_LocalRotation: {x: 0.0002333508, y: 0.9997584, z: 0.013110286, w: -0.017641876}
+  m_LocalRotation: {x: 0.00023334999, y: 0.9997584, z: 0.013110265, w: -0.017641842}
   m_LocalPosition: {x: 0.014, y: 0.195, z: 14.3}
   m_LocalScale: {x: 0.0049599763, y: 0.0154339485, z: 0.04323392}
   m_Children:
@@ -19798,6 +19799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e0ed761cfb2ec4a895aaa9c4419c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisCam: {fileID: 1411363650}
 --- !u!65 &725828487
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24303,6 +24305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e0ed761cfb2ec4a895aaa9c4419c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisCam: {fileID: 1411363650}
 --- !u!65 &865491959
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38636,10 +38639,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac5b8b7fe604d94f93ec94adb2deb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speeed: 7
   speedIncrease: 0
   speed: 9.81
   rotationSpeed: 60
+  minSpeed: 10
+  maxSpeed: 50
+  downWardSpeed: 0
+  anim: {fileID: 1238264161}
+  groundCheck: {fileID: 1570699585}
 --- !u!114 &1238264160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38659,6 +38666,12 @@ MonoBehaviour:
   - {fileID: 1411363650}
   - {fileID: 584372640}
   - {fileID: 1598376957}
+--- !u!95 &1238264161 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -4502631440016508817, guid: 079d8e1325f92924690275cc28f21b1b,
+    type: 3}
+  m_PrefabInstance: {fileID: 85728470}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1239562021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44855,6 +44868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e0ed761cfb2ec4a895aaa9c4419c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisCam: {fileID: 896953907}
 --- !u!1001 &1447635304
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45467,7 +45481,7 @@ Transform:
   - {fileID: 725828485}
   - {fileID: 1830820169}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1471125056
 MonoBehaviour:
@@ -47363,6 +47377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e0ed761cfb2ec4a895aaa9c4419c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisCam: {fileID: 100948195}
 --- !u!65 &1528709155
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48171,6 +48186,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5891514878253596645, guid: 006db0bb6c947394c988fe7797f8bb38,
     type: 3}
   m_PrefabInstance: {fileID: 1568624743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1570699585 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4335157640701538008, guid: 079d8e1325f92924690275cc28f21b1b,
+    type: 3}
+  m_PrefabInstance: {fileID: 85728470}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1574843335
 PrefabInstance:
@@ -55415,6 +55436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e0ed761cfb2ec4a895aaa9c4419c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisCam: {fileID: 584372640}
 --- !u!65 &1830820171
 BoxCollider:
   m_ObjectHideFlags: 0
