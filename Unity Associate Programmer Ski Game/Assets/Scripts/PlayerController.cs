@@ -46,8 +46,8 @@ using System.Collections.Generic;
 
         {
             if (isGrounded)
-            {
-                // MoveForward();
+            { 
+                MoveForward();
 
                 if (Input.GetKey(KeyCode.A))
                 {
