@@ -15,14 +15,14 @@ using System.Collections.Generic;
 
     private Rigidbody rb;
     public float speedIncrease = 0;
-    public float speed = 9.81f;
-    private float rotationInput;
-    private float rotationMax = 100;
-    private float rotationMin = -10;
     public float rotationSpeed =20;
     public float minSpeed = 0;
     public float maxSpeed = 20;
     public float downWardSpeed;
+    private float speedBoost =1;
+    public float boostAmount;
+    public float speedBoostTimer;
+    bool hasBoosted = false;
     public Animator anim;
     private bool isGrounded = true;
     public Transform groundCheck;
@@ -43,34 +43,10 @@ using System.Collections.Generic;
     {
 
         GroundCheck();
-
-        {
-            if (isGrounded)
-            { 
-                MoveForward();
-
-                if (Input.GetKey(KeyCode.A))
-                {
-                    LeftTurn();
-                    Debug.Log("A pressed");
-                }
-
-                if (Input.GetKey(KeyCode.D))
-                {
-                    RightTurn();
-                    Debug.Log("D pressed");
-                }
-
-            }
-        }
-        // Debug.Log(downWardSpeed);
-
     }
 
     private void RightTurn()
     {
-        Debug.Log(transform.eulerAngles.y);
-
         if (transform.eulerAngles.y > 91)
         {
             transform.Rotate(new Vector3(0, -rotationSpeed, 0) * Time.deltaTime, Space.Self);
@@ -80,7 +56,6 @@ using System.Collections.Generic;
 
     private void LeftTurn()
     {
-        Debug.Log(transform.eulerAngles.y);
         // rotates the player, limiting them after reaching a certain angle
         if (transform.eulerAngles.y < 269)
         {
@@ -91,9 +66,35 @@ using System.Collections.Generic;
 
     void FixedUpdate()
     {
+        if(Input.GetKeyDown(KeyCode.Space) && !hasBoosted)
+        {
+            SpeedBoost();
+        }
+        if (isGrounded)
+        {
+            MoveForward();
 
-        RotatePlayer();
+            if (Input.GetKey(KeyCode.A))
+            {
+                LeftTurn();
+                Debug.Log("A pressed");
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                RightTurn();
+                Debug.Log("D pressed");
+            }
+        }
     }
+
+    private void SpeedBoost()
+    {
+        hasBoosted = true;
+        speedBoost = boostAmount;
+        Invoke("BoostChange", speedBoostTimer);
+    }
+
     private void RotatePlayer()
     {
         /*
@@ -129,13 +130,19 @@ using System.Collections.Generic;
     public void GroundCheck()
     {
         //isGrounded = Physics.Raycast(transform.position, Vector3.down, .5f);
-        // couls also use a line cast to achieve ^ 
+        // couls also use a raycast cast to achieve ^ 
 
+        //is sending a line between ground check and player, checks for a layer - ground
         isGrounded = Physics.Linecast(transform.position, groundCheck.position, groundLayer);
-        Debug.Log(isGrounded);
         anim.SetBool("grounded", isGrounded);
 
 
+    }
+
+    public void BoostChange()
+    {
+        hasBoosted = false;
+        speedBoost = 1;
     }
 
 
@@ -145,13 +152,17 @@ using System.Collections.Generic;
         // Replace this with something else - a counter that has a clamp maybe
         // use Time.deltaTime
         // float move_z = Input.GetAxis("Vertical");
-        downWardSpeed += Time.deltaTime;
+        downWardSpeed += Time.deltaTime * speedIncrease;
+        downWardSpeed = Mathf.Clamp(downWardSpeed, minSpeed, maxSpeed);
+
         anim.SetFloat("playerSpeed", downWardSpeed);
-            downWardSpeed = Mathf.Clamp(downWardSpeed, minSpeed, maxSpeed);
 
-            Vector3 Up = new Vector3(0f, rb.velocity.y, 0f);
 
-            rb.velocity = (transform.forward).normalized * downWardSpeed + Up;
-            //Debug.Log("Velocity altered");
+
+
+        Vector3 velocity = transform.forward * downWardSpeed * speedBoost * Time.fixedDeltaTime;
+        velocity.y = rb.velocity.y;
+        rb.velocity = velocity;
+        //Debug.Log("Velocity altered");
     }
 }
