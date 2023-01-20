@@ -14,7 +14,7 @@ public class SnowmanBehaviour : MonoBehaviour
         {
             particalurPartical.gameObject.SetActive(true);
             Destroy(snowMan);
-
+            CinemachineShaker.Instance.ShakeCamera(2,0.5f);
         }
 
 
