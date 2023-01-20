@@ -16,6 +16,8 @@ using System.Collections.Generic;
     private Rigidbody rb;
     public float speedIncrease = 0;
     public float rotationSpeed =20;
+    public float turnAcceleration;
+    public float turnDecceleration;
     public float minSpeed = 0;
     public float maxSpeed = 20;
     public float downWardSpeed;
@@ -65,14 +67,17 @@ using System.Collections.Generic;
     }
 
     void FixedUpdate()
-    {
+    {            
+        SpeedCheck();
+        MoveForward();
+
         if(Input.GetKeyDown(KeyCode.Space) && !hasBoosted)
         {
             SpeedBoost();
         }
         if (isGrounded)
         {
-            MoveForward();
+
 
             if (Input.GetKey(KeyCode.A))
             {
@@ -130,10 +135,12 @@ using System.Collections.Generic;
     public void GroundCheck()
     {
         //isGrounded = Physics.Raycast(transform.position, Vector3.down, .5f);
-        // couls also use a raycast cast to achieve ^ 
+        // could also use a raycast cast to achieve ^ 
 
-        //is sending a line between ground check and player, checks for a layer - ground
+        //is sending a line between ground check and player, checks for a layer -> ground
         isGrounded = Physics.Linecast(transform.position, groundCheck.position, groundLayer);
+
+        //setting animator bool
         anim.SetBool("grounded", isGrounded);
 
 
@@ -148,6 +155,21 @@ using System.Collections.Generic;
 
     void MoveForward()
     {
+
+        // increase or decrease speed depending on how much they are facing downhill
+        float turnAngle = Mathf.Abs(180 - transform.eulerAngles.y);
+        downWardSpeed += Remap(0, 90, turnAcceleration, -turnDecceleration, turnAngle);
+
+
+
+        Vector3 velocity = transform.forward * downWardSpeed * speedBoost * Time.fixedDeltaTime;
+        velocity.y = rb.velocity.y;
+        rb.velocity = velocity;
+        //Debug.Log("Velocity altered");
+    }
+
+    private void SpeedCheck()
+    {
         // float move_x = Input.GetAxis("Horizontal");
         // Replace this with something else - a counter that has a clamp maybe
         // use Time.deltaTime
@@ -156,13 +178,13 @@ using System.Collections.Generic;
         downWardSpeed = Mathf.Clamp(downWardSpeed, minSpeed, maxSpeed);
 
         anim.SetFloat("playerSpeed", downWardSpeed);
+    }
 
-
-
-
-        Vector3 velocity = transform.forward * downWardSpeed * speedBoost * Time.fixedDeltaTime;
-        velocity.y = rb.velocity.y;
-        rb.velocity = velocity;
-        //Debug.Log("Velocity altered");
+    private float Remap(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
+    {
+        float OldRange = (OldMax - OldMin);
+        float NewRange = (NewMax - NewMin);
+        float NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin;
+        return (NewValue);
     }
 }
