@@ -7,7 +7,8 @@ using System.Collections.Generic;
  using UnityEngine.UI;
 
  public class PlayerController : MonoBehaviour
-{
+ { 
+     public static PlayerController Instance;
     public struct Stats
     {
         
@@ -36,6 +37,7 @@ using System.Collections.Generic;
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
     }
