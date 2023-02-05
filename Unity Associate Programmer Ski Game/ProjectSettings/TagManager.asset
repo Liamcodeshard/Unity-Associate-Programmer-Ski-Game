@@ -9,6 +9,7 @@ TagManager:
   - Bonus
   - Flag
   - LastFlag
+  - start
   layers:
   - Default
   - TransparentFX

@@ -38,20 +38,23 @@ public class FlagBehaviour : MonoBehaviour
 
     void OnTriggerEnter()
     {
-        if (started)
-        {
-            //StartTimer();
-            Debug.Log("Started");
+        started = !started;
 
-            started = false;
-        }
-        else
-        {
-            //StopTimer();
-            Debug.Log("Stpopped");
-            started = true;
-        }
+        /*
+       if (started)
+       {
+           //StartTimer();
+           Debug.Log("Started");
 
+           started = false;
+       }
+       else
+       {
+           //StopTimer();
+           Debug.Log("Stpopped");
+           started = true;
+       }
+        */
 
     }
 
